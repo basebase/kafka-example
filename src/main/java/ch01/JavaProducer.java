@@ -11,13 +11,19 @@ import java.util.Properties;
  * @Author xiaomoyu
  * @Date: 2022/1/6 17:21:43
  * @Description:    kafka消息生产者
+ *
+ * ./kafka-topics.sh --bootstrap-server localhost:9092 \
+ *   --create --partitions 1 --replication-factor 1 --topic java-example
  */
 public class JavaProducer {
     public static void main(String[] args) {
         Properties props = new Properties();
         props.put("bootstrap.servers", "localhost:9092");
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+
+        // 基于String类型的序列化
 //        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        // 自定义序列化
         props.put("value.serializer", "ch01.StudentSerializer");
 
 //        KafkaProducer<String, String> producer = new KafkaProducer(props);

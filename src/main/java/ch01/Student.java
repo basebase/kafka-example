@@ -3,7 +3,7 @@ package ch01;
 /**
  * @Author xiaomoyu
  * @Date: 2022/1/10 16:31:31
- * @Description:
+ * @Description:    学生对象, 被序列化传输对象
  */
 public class Student {
     private Integer id;

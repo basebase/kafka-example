@@ -1,15 +1,13 @@
 package ch01;
 
-import org.apache.kafka.common.header.Headers;
 import org.apache.kafka.common.serialization.Serializer;
-
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
  * @Author xiaomoyu
  * @Date: 2022/1/10 16:31:05
- * @Description:
+ * @Description:    自定义序列化
  */
 public class StudentSerializer implements Serializer<Student> {
     @Override
