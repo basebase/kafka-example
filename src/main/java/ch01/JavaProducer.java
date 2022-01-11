@@ -22,18 +22,18 @@ public class JavaProducer {
         props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
 
         // 基于String类型的序列化
-//        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
+        props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         // 自定义序列化
-        props.put("value.serializer", "ch01.StudentSerializer");
+//        props.put("value.serializer", "ch01.StudentSerializer");
 
-//        KafkaProducer<String, String> producer = new KafkaProducer(props);
-        KafkaProducer<String, Student> producer = new KafkaProducer(props);
+        KafkaProducer<String, String> producer = new KafkaProducer(props);
+//        KafkaProducer<String, Student> producer = new KafkaProducer(props);
 
-//        ProducerRecord<String, String> record =
-//                new ProducerRecord<>("java-example", "java-key", "java-value");
+        ProducerRecord<String, String> record =
+                new ProducerRecord<>("java-example", "java-key", "java-value");
 
-        ProducerRecord<String, Student> record =
-                new ProducerRecord<>("java-example", "java-key", new Student(1, "zhangsan"));
+//        ProducerRecord<String, Student> record =
+//                new ProducerRecord<>("java-example", "java-key", new Student(1, "zhangsan"));
 
 
         try {
