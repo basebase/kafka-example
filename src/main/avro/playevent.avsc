@@ -1,0 +1,10 @@
+{
+"namespace": "kafka.avro",
+"type": "record",
+"name": "PlayEvent",
+"fields": [
+     {"name": "id",   "type": "long"},
+     {"name": "type", "type": "string"},
+     {"name": "createtime", "type": "string"}
+ ]
+}
