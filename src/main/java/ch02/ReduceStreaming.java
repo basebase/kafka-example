@@ -1,13 +1,11 @@
 package ch02;
 
-//import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import kafka.avro.PlayEvent;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.*;
 import org.apache.kafka.streams.kstream.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,36 +54,29 @@ public class ReduceStreaming {
             }
         });
 
-        flatMap.to("java-example-source2");
-
-        flatMap.print(Printed.<String, PlayEvent>toSysOut());
 
         // 3. 数据分组
-//        KGroupedStream<String, PlayEvent> groupBy = flatMap.groupBy(new KeyValueMapper<String, PlayEvent, String>() {
-//            @Override
-//            public String apply(String key, PlayEvent value) {
-//                PlayEvent p = new PlayEvent();
-//                String k = p.getId() + "-" + p.getCreatetime();
-//                return k;
-//            }
-//        });
+        KGroupedStream<String, PlayEvent> groupBy = flatMap.groupBy(new KeyValueMapper<String, PlayEvent, String>() {
+            @Override
+            public String apply(String key, PlayEvent value) {
+                PlayEvent p = new PlayEvent();
+                String k = p.getId() + "-" + p.getCreatetime();
+                return k;
+            }
+        });
 
 
+        KTable<String, PlayEvent> reduce = groupBy.reduce(new Reducer<PlayEvent>() {
+            @Override
+            public PlayEvent apply(PlayEvent value1, PlayEvent value2) {
+                // value1即上一次返回的值
+                value2.setType(value2.getType() + "-");
+                return value2;
+            }
+        });
 
 
-//        groupBy.reduce(new Reducer<PlayEvent>() {
-//            @Override
-//            public PlayEvent apply(PlayEvent value1, PlayEvent value2) {
-//                System.out.println("reduce v1: " + value1);
-//                System.out.println("reduce v2: " + value2);
-//                return value2;
-//            }
-//        }).toStream().to("java-example-source2", Produced.with(Serdes.String(), playEventAvroSerde));
-
-//        reduce.toStream().to("java-example-source2", Produced.with(Serdes.String(), playEventAvroSerde));
-
-//        reduce.toStream().print(Printed.<String, PlayEvent>toSysOut().withLabel("reduce"));
-
+        reduce.toStream().to("java-example-source2", Produced.with(Serdes.String(), playEventAvroSerde));
 
 
         Topology topology = builder.build();
