@@ -1,6 +1,6 @@
 package ch02;
 
-import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
+//import io.confluent.kafka.serializers.AbstractKafkaSchemaSerDeConfig;
 import io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde;
 import kafka.avro.PlayEvent;
 import org.apache.kafka.common.serialization.Serdes;
@@ -26,7 +26,7 @@ public class AvroStreaming {
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "session-window-app");
         props.put(StreamsConfig.CLIENT_ID_CONFIG, "session-window-client");
         props.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
-        props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
+//        props.put(AbstractKafkaSchemaSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, SpecificAvroSerde.class);
         props.put(StreamsConfig.STATE_DIR_CONFIG, "/Users/xiaomoyu/Documents/code/java/kafka-example/stream-state");

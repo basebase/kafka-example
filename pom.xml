@@ -42,11 +42,13 @@
             <artifactId>kafka-streams-avro-serde</artifactId>
             <version>${io.confluent.version}</version>
         </dependency>
-        <dependency>
-            <groupId>io.confluent</groupId>
-            <artifactId>kafka-schema-serializer</artifactId>
-            <version>${io.confluent.version}</version>
-        </dependency>
+
+        <!-- 如果这个不注释, 我么就无法写入avro数据到kafka中, 一直报错, 很奇怪 -->
+<!--        <dependency>-->
+<!--            <groupId>io.confluent</groupId>-->
+<!--            <artifactId>kafka-schema-serializer</artifactId>-->
+<!--            <version>${io.confluent.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.apache.avro</groupId>
             <artifactId>avro</artifactId>
