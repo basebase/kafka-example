@@ -1,4 +1,6 @@
-*.DS_Store
-/target
 .idea/
-*.iml
+stream-state/
+target/
+*.DS_Store
+*.zip
+*.job
