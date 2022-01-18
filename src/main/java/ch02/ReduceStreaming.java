@@ -15,6 +15,24 @@ import java.util.Properties;
  * @Author xiaomoyu
  * @Date: 2022/1/17 18:44:48
  * @Description:    kafka reduce数据聚合
+ *
+ *
+ *
+ *
+ * ./kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic java-example-source
+ * ./kafka-topics.sh --bootstrap-server localhost:9092 --delete --topic java-example-source2
+ *
+ *
+ * ./kafka-topics.sh --bootstrap-server localhost:9092 \
+ * --create --partitions 1 --replication-factor 1 --topic java-example-source
+ *
+ * ./kafka-topics.sh --bootstrap-server localhost:9092 \
+ * --create --partitions 1 --replication-factor 1 --topic java-example-source2
+ *
+ *
+ * ./kafka-console-producer.sh --bootstrap-server localhost:9092 --topic java-example-source
+ * ./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic java-example-source2 --property print.key=true
+ *
  */
 public class ReduceStreaming {
     public static void main(String[] args) {
