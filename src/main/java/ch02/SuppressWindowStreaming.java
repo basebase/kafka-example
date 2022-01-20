@@ -41,7 +41,7 @@ import java.util.Properties;
  */
 public class SuppressWindowStreaming {
 
-    private static class SupperPlayTime implements TimestampExtractor {
+    private static class SuppreMessageTime implements TimestampExtractor {
         @Override
         public long extract(ConsumerRecord<Object, Object> record, long partitionTime) {
             String value = (String) record.value();
@@ -75,7 +75,7 @@ public class SuppressWindowStreaming {
 
         KStream<String, String> source =
                 builder.stream("java-example-source",
-                        Consumed.with(Serdes.String(), Serdes.String()).withTimestampExtractor(new SupperPlayTime()));
+                        Consumed.with(Serdes.String(), Serdes.String()).withTimestampExtractor(new SuppreMessageTime()));
 
         KGroupedStream<String, Message> groupedStream = source.map(new KeyValueMapper<String, String, KeyValue<String, Message>>() {
             @Override
