@@ -22,6 +22,7 @@
         <kafka.version>3.0.0</kafka.version>
         <avro.version>1.11.0</avro.version>
         <kafka.avro.version>5.3.0</kafka.avro.version>
+        <gson.version>2.8.5</gson.version>
         <io.confluent.version>7.0.1</io.confluent.version>
     </properties>
 
@@ -41,6 +42,12 @@
             <groupId>io.confluent</groupId>
             <artifactId>kafka-streams-avro-serde</artifactId>
             <version>${io.confluent.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
         </dependency>
 
         <!-- 如果这个不注释, 我么就无法写入avro数据到kafka中, 一直报错, 很奇怪 -->
