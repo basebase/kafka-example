@@ -68,30 +68,15 @@ public class ShopKafkaStreamApp {
                 .mapValues(value -> Shop.build(value).make());
 
 
-        // 2.
-        shopUserStream.groupBy(new KeyValueMapper<String, Shop, String>() {
-            @Override
-            public String apply(String key, Shop value) {
-                return value.getId();
-            }
-        }, Grouped.valueSerde(shopSerde)).aggregate(new Initializer<Double>() {
-            @Override
-            public Double apply() {
-                return 0.0d;
-            }
-        }, new Aggregator<String, Shop, Double>() {
-            @Override
-            public Double apply(String key, Shop value, Double aggregate) {
-                Double amount = value.getAmount() + aggregate;
-                return amount;
-            }
-        }, /* 聚合后可能是别的类型, 需要使用Materialized确定反序列化类型 */ Materialized.with(Serdes.String(), Serdes.Double()))
-                .toStream().peek((k, v) -> {
-            if (v > 10) {
-                System.out.println(k + " 赠送" + 1000 + " 积分");
-            }
+        // 2. 获取到每个用户消费金额, 用来判断该用户可以获得多少积分信息
+        shopUserStream.groupBy((key, value) -> {
+            return value.getId();
+        }, Grouped.valueSerde(shopSerde)).aggregate(() -> 0d, (key, value, agg) -> {
+            double amount = value.getAmount() + agg;
+            return amount;  /* agg后可能是别的类型, 需要使用Materialized确定数据类型, 默认配置使用String, 在读取数据就会出现类型转换异常 */
+        }, Materialized.with(Serdes.String(), Serdes.Double())).toStream().peek((k, v) -> {
+            System.out.println(k + " 赠送" + (v / 10) + " 积分");
         });
-
 
 
 
