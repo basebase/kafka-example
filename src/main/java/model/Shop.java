@@ -110,7 +110,7 @@ public class Shop {
     }
 
     public Shop make() {
-        this.id = "****" + this.id.substring(5, this.id.length() - 1) + "****";
+        this.id = "****" + this.id.substring(5, this.id.length()) + "****";
         return this;
     }
 

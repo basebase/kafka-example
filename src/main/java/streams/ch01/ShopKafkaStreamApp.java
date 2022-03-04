@@ -59,7 +59,7 @@ public class ShopKafkaStreamApp {
         props.put(StreamsConfig.STATE_DIR_CONFIG, "/Users/xiaomoyu/Documents/code/java/kafka-example/stream-state");
         props.put(StreamsConfig.CACHE_MAX_BYTES_BUFFERING_CONFIG, 0);
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
-        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.Double().getClass());
+        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
         StreamsBuilder builder = new StreamsBuilder();
 
         Serde<Shop> shopSerde = Serdes.serdeFrom(new JsonSerializer<>(), new JsonDeserializer<>(Shop.class));
@@ -85,7 +85,8 @@ public class ShopKafkaStreamApp {
                 Double amount = value.getAmount() + aggregate;
                 return amount;
             }
-        }).toStream().peek((k, v) -> {
+        }, /* 聚合后可能是别的类型, 需要使用Materialized确定反序列化类型 */ Materialized.with(Serdes.String(), Serdes.Double()))
+                .toStream().peek((k, v) -> {
             if (v > 10) {
                 System.out.println(k + " 赠送" + 1000 + " 积分");
             }
