@@ -79,6 +79,16 @@ public class ShopKafkaStreamApp {
         });
 
 
+        // 3. 获取到每个客户的购买信息
+        shopUserStream.mapValues(value -> {
+            String info = value.getId() + " " + value.getGoods() + " "
+                    + value.getAmount() + " " + value.getCreatetime();
+            return info;
+        }).peek((k, v) -> {
+            System.out.println(v);
+        });
+
+
 
         Topology topology = builder.build();
         KafkaStreams streams = new KafkaStreams(topology, props);
